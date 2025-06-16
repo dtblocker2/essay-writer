@@ -7,7 +7,7 @@ async function fetchOllamaResponse(topic) {
     const response = await fetch('http://localhost:11434/api/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'gemma3:4b', prompt: topic, stream: true })
+      body: JSON.stringify({ model: 'gemma3:4b', prompt: topic, stream: true, options:{temperature:1} })
     });
 
     if (!response.ok) {
@@ -66,8 +66,11 @@ document.addEventListener('keydown', (event) => {
   const responseDiv = document.getElementById('response_text');
 
   if (ai_response && i < ai_response.length) {
-    responseDiv.innerHTML += ai_response[i];
-    i++;
+    const remaining = ai_response.length - i;
+    const chunkSize = Math.min(5, remaining);
+    const chunk = ai_response.substr(i, chunkSize);
+    responseDiv.innerHTML += chunk;
+    i += chunkSize;
     responseDiv.scrollTop = responseDiv.scrollHeight;
   }
 });
