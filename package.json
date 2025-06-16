@@ -1,0 +1,16 @@
+{
+  "name": "essay-writer",
+  "version": "1.0.0",
+  "description": "Simple Essay writer like hackertyper",
+  "license": "ISC",
+  "author": "dtblocker02",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "openai": "^5.1.1"
+  }
+}
