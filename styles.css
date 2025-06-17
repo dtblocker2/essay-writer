@@ -1,97 +1,76 @@
-/* Reset some basics */
-body, h1, input, button {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 body {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #e0e7ff 0%, #f8fafc 100%);
-  font-family: 'Segoe UI', Arial, sans-serif;
-  color: #222;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+  padding: 2rem;
 }
 
 .container {
-  max-width: 600px;
-  margin: 60px auto 0 auto;
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 4px 32px rgba(0,0,0,0.09);
-  padding: 36px 28px 32px 28px;
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
 }
 
 h1 {
-  text-align: center;
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: #3772ff;
-  margin-bottom: 32px;
-  letter-spacing: 1px;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  color: #222;
 }
 
-.input-area {
+.controls {
   display: flex;
-  gap: 12px;
-  justify-content: center;
-  margin-bottom: 26px;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
 #topic {
-  flex: 1;
-  border: 2px solid #bfcfff;
-  border-radius: 12px;
-  padding: 12px 16px;
-  font-size: 1.1rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  outline: none;
-  background: #f4f8ff;
+  padding: 0.5rem;
+  font-size: 1rem;
+  width: 60%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-#topic:focus {
-  border-color: #3772ff;
-  box-shadow: 0 0 0 2px #b3d4fc;
+#model_selector,
+#fetch_button {
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+}
+
+#model_selector {
+  background-color: #e0e0e0;
 }
 
 #fetch_button {
-  background: #3772ff;
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  padding: 12px 22px;
-  font-size: 1.1rem;
-  font-weight: 600;
+  background-color: #007bff;
+  color: white;
   cursor: pointer;
-  transition: background 0.2s, box-shadow 0.2s;
-  box-shadow: 0 2px 8px rgba(55, 114, 255, 0.08);
+  transition: background 0.3s;
 }
 
-#fetch_button:hover, #fetch_button:focus {
-  background: #2656c8;
+#fetch_button:hover {
+  background-color: #0056b3;
 }
 
-#response_text {
-  margin-top: 32px;
-  padding: 20px 16px;
-  background: #f4f8ff;
-  border-radius: 12px;
-  min-height: 120px;
-  font-size: 1.08rem;
-  color: #222;
-  box-shadow: 0 2px 8px rgba(55, 114, 255, 0.04);
-  white-space: pre-line;
-}
-
-@media (max-width: 700px) {
-  .container {
-    margin: 24px 4vw;
-    padding: 20px 8px 24px 8px;
-  }
-  .input-area {
-    flex-direction: column;
-    gap: 10px;
-  }
-  #fetch_button {
-    width: 100%;
-  }
+.response-box {
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  min-height: 200px;
+  text-align: left;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-y: auto;
+  max-height: 500px;
 }

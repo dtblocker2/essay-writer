@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Essay Writer</title>
-  <link rel="stylesheet" href="styles.css"> <!-- Optional CSS file -->
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Essay Writer</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Optional CSS file -->
+  </head>
+  <body>
+    <h1>Essay Writer</h1>
+    <div class="text_box">
+      <input
+        type="text"
+        id="topic"
+        placeholder="Enter your topic..."
+        size="40"
+      />
+    </div>
+    <button id="fetch_button">Write Essay</button>
 
-  <h1>Essay Writer</h1>
-  <div class="text_box"><input type="text" id="topic" placeholder="Enter your topic..." size="40"/></div>
-  <button id="fetch_button">Write Essay</button>
+    <select name="model_selector" id="model_selector" title="Select Your Model">
+      <option value="ollama">Ollama (Offline)</option>
+      <option value="gemini">Gemini (Online)</option>
+    </select>
 
-  <div id="response_text"></div>
+    <div id="response_text"></div>
 
-  <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
