@@ -1,8 +1,12 @@
+//Some Constants
+const responseDiv = document.getElementById("response_text");
+
 let ai_response = "";
 let i = 0;
-let is_fetching = false;
 
 async function fetchOllamaResponse(topic) {
+  i = 0;
+  responseDiv.innerHTML = "";
   try {
     const response = await fetch("http://localhost:11434/api/generate", {
       method: "POST",
@@ -14,14 +18,12 @@ async function fetchOllamaResponse(topic) {
         options: { temperature: 1 },
       }),
     });
-
     if (!response.ok) {
       throw new Error("Server responded with status: " + response.status);
     }
 
     const reader = response.body.getReader();
     const decoder = new TextDecoder("utf-8");
-    let fullText = "";
 
     while (true) {
       const { value, done } = await reader.read();
@@ -34,7 +36,7 @@ async function fetchOllamaResponse(topic) {
         try {
           const json = JSON.parse(line);
           if (json.response) {
-            fullText += json.response;
+            ai_response += json.response;
           }
         } catch (err) {
           console.error("Failed to parse JSON:", err);
@@ -42,7 +44,6 @@ async function fetchOllamaResponse(topic) {
       }
     }
 
-    return fullText;
   } catch (err) {
     console.error("Fetch error:", err);
     return "Error fetching response from model.";
@@ -50,6 +51,8 @@ async function fetchOllamaResponse(topic) {
 }
 
 async function fetchGeminiResponse(topic) {
+  i = 0;
+  responseDiv.innerHTML = "fetching....";
   const response = await fetch("/generate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -58,33 +61,29 @@ async function fetchGeminiResponse(topic) {
     }),
   });
   const data = await response.json();
+  responseDiv.innerHTML = '';
   return data.output;
 }
 
 document.getElementById("fetch_button").addEventListener("click", async () => {
   const topic = document.getElementById("topic").value.trim();
-  const responseDiv = document.getElementById("response_text");
+  ai_response = "";
 
-  if (!topic || is_fetching) {
+  if (!topic) {
     return;
   }
-
-  is_fetching = true;
-  responseDiv.innerHTML = "Fetching response...";
 
   const model_selected = document.getElementById("model_selector").value;
 
   if (model_selected === "ollama") {
-    ai_response = await fetchOllamaResponse(topic);
+    await fetchOllamaResponse(topic);
   }
-  if (model_selected === "gemini") {
+  if (model_selected === "gemini" && window.navigator.onLine) {
     ai_response = await fetchGeminiResponse(topic);
-    console.log(typeof ai_response);
+  } else {
+    alert('User Offline, Use Offline Model');
   }
 
-  i = 0;
-  responseDiv.innerHTML = "";
-  is_fetching = false;
 });
 
 document.addEventListener("keydown", (event) => {
@@ -95,8 +94,11 @@ document.addEventListener("keydown", (event) => {
     const remaining = ai_response.length - i;
     const chunkSize = Math.min(5, remaining);
     const chunk = ai_response.substr(i, chunkSize);
-    responseDiv.innerHTML += chunk;
-    i += chunkSize;
+    if (remaining != 0) {
+      responseDiv.innerHTML += chunk;
+      i += chunkSize;
+    }
+
     responseDiv.scrollTop = responseDiv.scrollHeight;
   }
 });
