@@ -13,7 +13,7 @@ async function fetchOllamaResponse(topic) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         model: "gemma3:4b",
-        prompt: topic,
+        prompt: `write essay on topic ${topic}`,
         stream: true,
         options: { temperature: 1 },
       }),
@@ -43,7 +43,6 @@ async function fetchOllamaResponse(topic) {
         }
       }
     }
-
   } catch (err) {
     console.error("Fetch error:", err);
     return "Error fetching response from model.";
@@ -61,7 +60,7 @@ async function fetchGeminiResponse(topic) {
     }),
   });
   const data = await response.json();
-  responseDiv.innerHTML = '';
+  responseDiv.innerHTML = "";
   return data.output;
 }
 
@@ -78,12 +77,13 @@ document.getElementById("fetch_button").addEventListener("click", async () => {
   if (model_selected === "ollama") {
     await fetchOllamaResponse(topic);
   }
-  if (model_selected === "gemini" && window.navigator.onLine) {
-    ai_response = await fetchGeminiResponse(topic);
-  } else {
-    alert('User Offline, Use Offline Model');
+  if (model_selected === "gemini") {
+    if (window.navigator.onLine) {
+      ai_response = await fetchGeminiResponse(topic);
+    } else {
+      alert("User Offline, Use Offline Model");
+    }
   }
-
 });
 
 document.addEventListener("keydown", (event) => {

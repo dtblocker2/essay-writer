@@ -8,22 +8,29 @@
     <!-- Optional CSS file -->
   </head>
   <body>
-    <h1>Essay Writer</h1>
-    <div class="text_box">
-      <input
-        type="text"
-        id="topic"
-        placeholder="Enter your topic..."
-        size="40" autocomplete="off"
-      />
+    <div class="headers">
+      <h1>Essay Writer</h1>
+      <div class="text_box">
+        <input
+          type="text"
+          id="topic"
+          placeholder="Enter your topic..."
+          size="40"
+          autocomplete="off"
+        />
+      </div>
+      <button id="fetch_button">Write Essay</button>
+
+      <select
+        name="model_selector"
+        id="model_selector"
+        title="Select Your Model"
+      >
+        <option value="ollama">Ollama (Offline)</option>
+        <option value="gemini">Gemini (Online)</option>
+      </select>
     </div>
-    <button id="fetch_button">Write Essay</button>
-
-    <select name="model_selector" id="model_selector" title="Select Your Model">
-      <option value="ollama">Ollama (Offline)</option>
-      <option value="gemini">Gemini (Online)</option>
-    </select>
-
+    <br>
     <div id="response_text"></div>
 
     <script src="script.js"></script>
